@@ -36,6 +36,9 @@ public class MaterialContentOverflow extends FrameLayout {
     private FrameLayout contentFrame;
 
     private OverflowGestureListener overflowGestureListener;
+    private int fabTotalHeight;
+    private float initialYPosition;
+    private int fabMargin;
 
     public MaterialContentOverflow(Context context) {
         super(context);
@@ -89,9 +92,7 @@ public class MaterialContentOverflow extends FrameLayout {
             buttonPosition = a.getInt(R.styleable.MaterialContentOverflow_buttonPosition, 0);
         } finally {
             a.recycle();
-            if (!isInEditMode()) {
-                makeView(context, buttonDrawable, buttonColor, contentColor, buttonPosition);
-            }
+            makeView(context, buttonDrawable, buttonColor, contentColor, buttonPosition);
         }
     }
 
@@ -100,8 +101,6 @@ public class MaterialContentOverflow extends FrameLayout {
         FrameLayout contentFrame = createContentFrame(context, contentColor);
 
         FloatingActionButton fab = createFab(context, buttonDrawable, buttonColor, buttonPosition);
-
-        this.getViewTreeObserver().addOnGlobalLayoutListener(new GlobalLayoutListener(this, fab, contentFrame));
 
         overflowGestureListener = new OverflowGestureListener(this);
 
@@ -144,7 +143,7 @@ public class MaterialContentOverflow extends FrameLayout {
 
         LayoutParams fabLayoutParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        int fabMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics());
+        fabMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics());
 
         if (buttonPosition == RIGHT) {
 
@@ -173,7 +172,6 @@ public class MaterialContentOverflow extends FrameLayout {
         fabLayoutParams.bottomMargin = fabMargin;
         fabLayoutParams.topMargin = fabMargin;
 
-
         if (buttonDrawable > 0) {
             fab.setImageDrawable(ContextCompat.getDrawable(context, buttonDrawable));
         }
@@ -195,7 +193,6 @@ public class MaterialContentOverflow extends FrameLayout {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
         int utilizedWidth = getPaddingLeft() + getPaddingRight();
         int utilizedHeight = getPaddingTop() + getPaddingBottom();
@@ -223,6 +220,7 @@ public class MaterialContentOverflow extends FrameLayout {
         setMeasuredDimension(
                 resolveSize(contentFrame.getMeasuredWidth(), widthMeasureSpec),
                 resolveSize(utilizedHeight, heightMeasureSpec));
+
     }
 
     @Override
@@ -249,6 +247,32 @@ public class MaterialContentOverflow extends FrameLayout {
     }
 
     @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+
+        fabTotalHeight = fab.getHeight() +
+                fabMargin + /*bottom margin*/
+                fabMargin;  /*top margin*/
+
+        initialYPosition = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX,
+                ((ViewGroup) this.getParent()).getHeight() - fabTotalHeight,
+                getResources().getDisplayMetrics());
+
+        ViewHelper.setY(this, initialYPosition);
+
+        overflowGestureListener.setInitialYPosition(initialYPosition);
+
+        if (!isInEditMode()) {
+            //measured on device
+            contentFrame.setPadding(0, fabTotalHeight / 2, 0, 0);
+        } else {
+            //measured on visual editor
+            contentFrame.setPadding(0, fabTotalHeight, 0, 0);
+        }
+
+        super.onLayout(changed, left, top, right, bottom);
+    }
+
+    @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         overflowGestureListener.clearReferences();
@@ -259,52 +283,4 @@ public class MaterialContentOverflow extends FrameLayout {
         fab = null;
         contentFrame = null;
     }
-
-    private class GlobalLayoutListener implements ViewTreeObserver.OnGlobalLayoutListener {
-
-        private WeakReference<ViewGroup> overflowRef;
-        private WeakReference<FloatingActionButton> fabButtonRef;
-        private WeakReference<FrameLayout> contentFrameRef;
-
-        public GlobalLayoutListener(ViewGroup overflow, FloatingActionButton fabButton, FrameLayout content) {
-            this.overflowRef = new WeakReference<>(overflow);
-            this.fabButtonRef = new WeakReference<>(fabButton);
-            contentFrameRef = new WeakReference<>(content);
-        }
-
-        @Override
-        public void onGlobalLayout() {
-
-            ViewGroup overflow = overflowRef.get();
-
-            ViewGroup overflowParent = (ViewGroup) overflow.getParent();
-
-            FloatingActionButton fab = fabButtonRef.get();
-
-            int fabTotalHeight = fab.getHeight() +
-                    ((MarginLayoutParams) fab.getLayoutParams()).bottomMargin +
-                    ((MarginLayoutParams) fab.getLayoutParams()).topMargin;
-            float initialYPosition = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX,
-                    overflowParent.getHeight() - fabTotalHeight,
-                    getResources().getDisplayMetrics());
-
-            ViewHelper.setY(overflow, initialYPosition);
-
-            overflowGestureListener.setInitialYPosition(initialYPosition);
-
-            FrameLayout contentFrame = contentFrameRef.get();
-
-            contentFrame.setPadding(0, (fabTotalHeight / 2), 0, 0);
-
-            if (Build.VERSION.SDK_INT >= 16)
-                overflow.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-            else
-                overflow.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-
-            overflowRef.clear();
-            fabButtonRef.clear();
-            contentFrameRef.clear();
-        }
-    }
-
 }
