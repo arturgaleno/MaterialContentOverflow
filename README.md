@@ -5,7 +5,7 @@
 ## Usage
 
 MaterialContentOverflow is a ViewGroup, so you can put views inside it.
-See the code example for more details.
+See the example app for more details.
 
 ```xml
 <com.materialoverflowcontent.MaterialContentOverflow xmlns:android="http://schemas.android.com/apk/res/android"
