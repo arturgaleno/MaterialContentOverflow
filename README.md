@@ -4,6 +4,9 @@
 
 ## Usage
 
+MaterialContentOverflow is a ViewGroup, so you can put views inside it.
+See the code example for more details.
+
 ```xml
 <com.materialoverflowcontent.MaterialContentOverflow xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -13,5 +16,8 @@
     app:buttonDrawable="@drawable/abc_btn_rating_star_off_mtrl_alpha"
     app:contentColor="@color/primary"
     app:buttonPosition="right">
+
+    ...
+
 <\com.materialoverflowcontent.MaterialContentOverflow>
 ```
