@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <dimen name="fab_elevation">8dp</dimen>
-    <dimen name="fab_translation_z_pressed">6dp</dimen>
-    <dimen name="fab_content_size">24dp</dimen>
-    <dimen name="fab_size_normal">56dp</dimen>
-    <dimen name="fab_size_mini">40dp</dimen>
-</resources>
