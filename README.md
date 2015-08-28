@@ -21,3 +21,9 @@ See the example app for more details.
 
 <\com.materialoverflowcontent.MaterialContentOverflow>
 ```
+
+## Gradle
+
+```
+compile 'com.materialcontentoverflow:materialcontentoverflow:1.0.0'
+```
