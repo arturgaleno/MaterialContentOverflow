@@ -44,3 +44,6 @@ buttonPosition - The position can be, "center", right" or "left".
 ```
 compile 'com.materialcontentoverflow:materialcontentoverflow:1.0.0'
 ```
+
+#### This and other libraries you can find in:
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-MaterialContentOverflow-green.svg?style=flat)](https://android-arsenal.com/details/1/2423)
