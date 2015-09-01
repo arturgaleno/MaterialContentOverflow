@@ -10,7 +10,7 @@ MaterialContentOverflow is a ViewGroup that implement the Persistent Bottom Shee
 
 So you can put views inside it, and the MaterialContentOverflow will be displayed at bottom of screen.
 
-With a sliding the view to up will show the content, and sliding to to bottom will hide.
+Sliding the view to up will show the content, and sliding to to bottom will hide.
 
 The Google Material Design related to this view can be see [there](http://www.google.com/design/spec/components/bottom-sheets.html#bottom-sheets-persistent-bottom-sheets).
 
