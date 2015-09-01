@@ -2,6 +2,8 @@
 
 <img src="./contentoverflow.gif" width="480" height="360"></img>
 
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-MaterialContentOverflow-green.svg?style=flat)](https://android-arsenal.com/details/1/2423)
+
 ## Usage
 
 MaterialContentOverflow is a ViewGroup that implement the Persistent Bottom Sheets pattern of Google Material Design.
@@ -45,5 +47,19 @@ buttonPosition - The position can be, "center", right" or "left".
 compile 'com.materialcontentoverflow:materialcontentoverflow:1.0.0'
 ```
 
-#### This and other libraries you can find in:
-[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-MaterialContentOverflow-green.svg?style=flat)](https://android-arsenal.com/details/1/2423)
+License
+-------
+
+    Copyright 2015 Artur Galeno Muniz
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
