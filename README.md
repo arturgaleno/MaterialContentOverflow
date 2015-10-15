@@ -31,6 +31,26 @@ See the example app for more details.
 <\com.materialoverflowcontent.MaterialContentOverflow>
 ```
 
+##Saving Instance State
+
+Save the instance state is very simple, as follow:
+
+```java
+@Override
+protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    super.onRestoreInstanceState(savedInstanceState);
+    contentOverflow.onRestoreInstanceState(savedInstanceState);
+}
+```
+
+```java
+@Override
+protected void onSaveInstanceState(Bundle outState) {
+    contentOverflow.onSaveInstanceState(outState);
+    super.onSaveInstanceState(outState);
+}
+```
+
 ## Attributes
 
 fabButtonColor - Determines the color of the FloatingActionButton.
