@@ -17,7 +17,9 @@ import java.lang.ref.WeakReference;
  */
 public class OverflowGestureListener extends GestureDetector.SimpleOnGestureListener {
 
-    private Boolean ifScrollUpping;
+    private Boolean isScrollUpping;
+
+    private boolean isOpened;
 
     private float initialYPosition = -1;
 
@@ -36,9 +38,11 @@ public class OverflowGestureListener extends GestureDetector.SimpleOnGestureList
         if (motionEvent2.getRawY() <= initialYPosition) {
             ViewHelper.setTranslationY(overflow.get(), motionEvent2.getRawY());
             if (motionEvent.getRawY() < motionEvent2.getRawY()) {
-                ifScrollUpping = false;
+                isScrollUpping = false;
+                isOpened = false;
             } else {
-                ifScrollUpping = true;
+                isScrollUpping = true;
+                isOpened = true;
             }
         }
         return true;
@@ -46,7 +50,7 @@ public class OverflowGestureListener extends GestureDetector.SimpleOnGestureList
 
     @Override
     public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent2, float velocityX, float velocityY) {
-        ifScrollUpping = null;
+        isScrollUpping = null;
         if (motionEvent.getRawY() < motionEvent2.getRawY()) {
             slide(initialYPosition);
         } else {
@@ -68,8 +72,8 @@ public class OverflowGestureListener extends GestureDetector.SimpleOnGestureList
             gestureDetectorCompat.onTouchEvent(motionEvent);
             view.onTouchEvent(motionEvent);
             if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                if (ifScrollUpping != null) {
-                    if (ifScrollUpping) {
+                if (isScrollUpping != null) {
+                    if (isScrollUpping) {
                         slide(0f);
                     } else {
                         slide(initialYPosition);
@@ -86,6 +90,19 @@ public class OverflowGestureListener extends GestureDetector.SimpleOnGestureList
 
     public void setInitialYPosition(float initialYPosition) {
         this.initialYPosition = initialYPosition;
+    }
+
+    public boolean isOpened() {
+        return isOpened;
+    }
+
+    public void setIsOpened(boolean isOpened) {
+        this.isOpened = isOpened;
+        if (isOpened) {
+            slide(0f);
+        } else {
+            slide(initialYPosition);
+        }
     }
 
     public void clearReferences() {

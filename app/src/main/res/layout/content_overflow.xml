@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/contentOverflow"
     app:fabButtonColor="@color/fab"
     app:buttonDrawable="@drawable/abc_btn_rating_star_off_mtrl_alpha"
     app:contentColor="@color/primary"
@@ -21,27 +22,12 @@
         android:id="@+id/button2"
         android:layout_gravity="right|top" />
 
-    <Button
-        android:layout_width="wrap_content"
+    <EditText
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New Button"
+        android:hint="Edit Text"
         android:id="@+id/button3"
         android:layout_gravity="left|center_vertical" />
-
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/Widget.AppCompat.ProgressBar"
-        android:text="New Button"
-        android:id="@+id/button4"
-        android:layout_gravity="center" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button5"
-        android:layout_gravity="right|center_vertical" />
 
     <Button
         android:layout_width="wrap_content"

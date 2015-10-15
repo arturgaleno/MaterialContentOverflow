@@ -4,6 +4,8 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
@@ -21,6 +23,8 @@ import com.nineoldandroids.view.ViewHelper;
  */
 
 public class MaterialContentOverflow extends FrameLayout {
+
+    private static final String INSTANCE_KEY = "com.materialcontentoverflow.INSTANCE_KEY";
 
     public static final int LEFT = 0;
 
@@ -254,7 +258,11 @@ public class MaterialContentOverflow extends FrameLayout {
                 ((ViewGroup) this.getParent()).getHeight() - fabTotalHeight,
                 getResources().getDisplayMetrics());
 
-        ViewHelper.setY(this, initialYPosition);
+        if (!changed && this.getY() == 0f) {
+            ViewHelper.setY(this, 0f);
+        } else {
+            ViewHelper.setY(this, initialYPosition);
+        }
 
         overflowGestureListener.setInitialYPosition(initialYPosition);
 
@@ -267,6 +275,14 @@ public class MaterialContentOverflow extends FrameLayout {
         }
 
         super.onLayout(changed, left, top, right, bottom);
+    }
+
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        overflowGestureListener.setIsOpened(savedInstanceState.getBoolean(INSTANCE_KEY));
+    }
+
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean(INSTANCE_KEY, overflowGestureListener.isOpened());
     }
 
     @Override
