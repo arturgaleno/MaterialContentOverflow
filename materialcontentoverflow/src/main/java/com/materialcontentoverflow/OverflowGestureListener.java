@@ -98,11 +98,6 @@ public class OverflowGestureListener extends GestureDetector.SimpleOnGestureList
 
     public void setIsOpened(boolean isOpened) {
         this.isOpened = isOpened;
-        if (isOpened) {
-            slide(0f);
-        } else {
-            slide(initialYPosition);
-        }
     }
 
     public void clearReferences() {

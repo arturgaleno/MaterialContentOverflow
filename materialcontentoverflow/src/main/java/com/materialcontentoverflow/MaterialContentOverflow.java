@@ -254,11 +254,9 @@ public class MaterialContentOverflow extends FrameLayout {
                 fabMargin + /*bottom margin*/
                 fabMargin;  /*top margin*/
 
-        initialYPosition = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX,
-                ((ViewGroup) this.getParent()).getHeight() - fabTotalHeight,
-                getResources().getDisplayMetrics());
+        initialYPosition = getInitialYPosition();
 
-        if (!changed && this.getY() == 0f) {
+        if (overflowGestureListener.isOpened() && !changed) {
             ViewHelper.setY(this, 0f);
         } else {
             ViewHelper.setY(this, initialYPosition);
@@ -275,6 +273,12 @@ public class MaterialContentOverflow extends FrameLayout {
         }
 
         super.onLayout(changed, left, top, right, bottom);
+    }
+
+    private float getInitialYPosition() {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX,
+                ((ViewGroup) this.getParent()).getHeight() - fabTotalHeight,
+                getResources().getDisplayMetrics());
     }
 
     public void onRestoreInstanceState(Bundle savedInstanceState) {
