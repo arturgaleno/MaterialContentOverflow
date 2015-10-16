@@ -64,7 +64,7 @@ buttonPosition - The position can be, "center", right" or "left".
 ## Gradle
 
 ```
-compile 'com.materialcontentoverflow:materialcontentoverflow:1.0.0'
+compile 'com.materialcontentoverflow:materialcontentoverflow:1.1.0'
 ```
 
 License
