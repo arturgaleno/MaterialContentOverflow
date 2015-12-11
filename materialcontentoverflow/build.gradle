@@ -29,5 +29,5 @@ dependencies {
     compile 'com.android.support:design:23.0.0'
 }
 
-apply from: '../installv1.gradle'
-apply from: '../bintrayv1.gradle'
+//apply from: '../installv1.gradle'
+//apply from: '../bintrayv1.gradle'
